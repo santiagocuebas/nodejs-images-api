@@ -4,6 +4,8 @@
   "description": "",
   "main": "build/index.js",
   "type": "module",
+  "engines": { "node": "16.x" },
+  "packageManager": "pnpm@7.4.0",
   "scripts": {
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
