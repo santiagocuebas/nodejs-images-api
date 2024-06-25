@@ -11,10 +11,10 @@ router.post('/upload', validate(Upload), homeCtrl.postUpload);
 
 router.get('/gallery', homeCtrl.getGallery);
 
-router.get('/gallery/:imageId', imageCtrl.getImageData);
+router.get('/gallery/:id', imageCtrl.getImageData);
 
-router.post('/:imageId/comment', validate(Comment), imageCtrl.postComment);
+router.post('/:id/comment', validate(Comment), imageCtrl.postComment);
 
-router.delete('/:imageId', imageCtrl.deleteImage);
+router.delete('/:id', imageCtrl.deleteImage);
 
 export default router;

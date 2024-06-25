@@ -13,16 +13,6 @@ export type TypeOrder = string | {
   };
 } | [string, SortOrder][] | null | undefined;
 
-export type ImageDocument = Document<unknown, object, IImage> & IImage & {
-  _id: Types.ObjectId
-};
-
-export type ImageFlat = FlattenMaps<IImage> & { _id: Types.ObjectId };
-
-export type CommentDocument = Document<unknown, object, IComment> & IComment & {
-  _id: Types.ObjectId
-};
-
 export interface IImage {
   id: string;
   uniqueId: string;

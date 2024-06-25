@@ -9,7 +9,6 @@ export const Upload = [
         .isString().bail()
         .isLength({ min: 3, max: 60 }).withMessage('The title must contain between 3 and 60 characters'),
     body('description', 'Enter a valid description')
-        .exists({ values: 'falsy' }).bail()
         .isString().bail()
         .isLength({ max: 4200 }).withMessage('Have exceeded the max number of characters allowed')
 ];
@@ -19,7 +18,7 @@ export const Comment = [
         .isLength({ min: 3, max: 40 }).withMessage('The name must contain between 3 and 40 characters'),
     body('email', 'Enter a valid email')
         .isEmail().bail()
-        .isLength({ max: 60 }).withMessage('The name must contain between 3 and 40 characters'),
+        .isLength({ max: 60 }).withMessage('Have exceeded the max number of characters allowed'),
     body('comment', 'Enter a valid comment')
         .exists({ values: 'falsy' }).bail()
         .isString().bail()
