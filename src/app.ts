@@ -2,12 +2,14 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import multer from 'multer';
-import { cloudinaryConfig } from './cloudinary.js';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { ORIGIN } from './config.js';
 import routes from './routes/index.js';
 
 // Initializations
 const app = express();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const storage = multer.memoryStorage();
 
 // Middlewares
@@ -20,10 +22,10 @@ app.use(cors({
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	credentials: true
 }));
-app.use('*', cloudinaryConfig);
 
 // Uploads Folder
-app.use(multer({ storage }).single('image'));
+app.use(multer({ dest: '../uploads', storage }).single('image'));
+app.use('/uploads', express.static(join(__dirname, '../uploads')));
 
 // Routes
 app.use('/api', routes);

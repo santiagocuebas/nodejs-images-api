@@ -40,7 +40,7 @@ export const deleteImage: Direction = async (req, res) => {
 	
 		if (image === null) throw undefined;
 
-		await deleteFile(image.uniqueId + image.ext);
+		await deleteFile(image.filename);
 		await Comment.deleteMany({ imageId: image._id });
 		await image.deleteOne();
 

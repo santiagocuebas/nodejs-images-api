@@ -1,30 +1,23 @@
-import { v2 as cloudinary } from 'cloudinary';
-import DatauriParser from 'datauri/parser.js';
+import fs from 'fs/promises';
+import { resolve } from 'path';
 import { randomId } from './index.js';
 import { AvailableExts } from '../dictionary.js';
 
-const parser = new DatauriParser();
-
 export const uploadFile = async (file: Express.Multer.File | undefined) => {
-	const fileString = file
-		? parser.format(AvailableExts[file.mimetype], file.buffer).content
-		: undefined;
-
-	if (file === undefined || fileString === undefined) throw undefined;
+	if (file === undefined) throw undefined;
 
 	const id = await randomId();
-	const data = await cloudinary
-		.uploader
-		.upload(fileString, { public_id: id, folder: 'node-images/' });
+	const ext = AvailableExts[file.mimetype];
+	const filename = 'uploads/' + id + ext;
+	await fs.appendFile(resolve(filename), file.buffer);
 
-	return { id, filename: data.secure_url, ext: AvailableExts[file.mimetype] };
+	return { id, filename, ext };
 };
 
 export const deleteFile = async (fileURL: string) => {
-	await cloudinary
-		.uploader
-		.destroy('node-images/' + fileURL)
-		.catch(() => {
-			console.error('An error occurred while trying to delete the image');
-		});
+	const path = resolve(fileURL);
+
+	await fs
+		.unlink(path)
+		.catch(err => console.error(err));
 };
